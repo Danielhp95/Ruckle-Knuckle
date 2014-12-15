@@ -3,7 +3,6 @@ package menus;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
-import java.util.Set;
 
 import ruckleKnuckle.StateController;
 import acm.graphics.GObject;
