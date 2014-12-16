@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import ruckleKnuckle.StateController;
 import ruckleKnuckle.StateID;
+import acm.graphics.GImage;
 import acm.graphics.GObject;
 import acm.graphics.GRect;
 
@@ -14,43 +16,43 @@ public class CharSelection extends State {
 
 	private int player1Character;
 	private int player2Character;
-	private final int NUMBER_OF_CHARACTERS = 3;
-	//Colors will change to character images
-	private Color colors[];
+	
+	private ArrayList<GImage> characters;
+	private ArrayList<GImage> maps;
+
+	// Vs image
+	GImage vsImage = new GImage("images/vs.jpg", 287.5, 70);
+	GImage player1selection;
+	GImage player2selection;
+	GImage currentMap;
+	private int mapNumber;
 
 	public CharSelection(StateController controller) {
 		super(controller);
-
-		Color firstCharColor = Color.RED;
-		Color lastCharColor = Color.YELLOW;
+		// Characters images
+		characters = new ArrayList<>();
+		maps       = new ArrayList<>();
+		characters.add(new GImage("images/1.jpg", 160, 385));
+		characters.add(new GImage("images/2.jpg", 320, 385));
+		characters.add(new GImage("images/3.jpg", 480, 385));
 		
-		colors = new Color[NUMBER_OF_CHARACTERS];
-		colors[0] = firstCharColor;
-		colors[1] = Color.MAGENTA;
-		colors[2] = lastCharColor;
+		maps.add(new GImage("images/1.jpg"));
+		maps.add(new GImage("images/2.jpg"));
+		maps.add(new GImage("images/3.jpg", 700, 385));
 
-		buttons.put("char1", createCharBox(160, 385, 160, 100, firstCharColor));
-		buttons.put("char2", createCharBox(320, 385, 160, 100, Color.MAGENTA));
-		buttons.put("char3", createCharBox(480, 385, 160, 100, lastCharColor));
-		buttons.put("vs", new GRect(287.5, 70, 225, 225));
-		buttons.put("player1Selection",
-				createCharBox(30, 37.5, 225, 300, firstCharColor));
-		buttons.put("player2Selection", createCharBox(542.5, 37.5, 225, 300, lastCharColor));
+		//Same images as 
+		player1selection = new GImage("images/1.jpg", 30, 37.5);
+		player2selection = new GImage("images/3.jpg", 542.5, 37.5);
+		currentMap = new GImage(maps.get(0).getImage(), 700, 385);
+
 		buttons.put("battle", new GRect(300, 510, 200, 70));
 		buttons.put("back", new GRect(300, 600, 200, 70));
 
-		//Players start on opposite ends
+		// Players start on opposite ends
 		player1Character = 0;
-		player2Character = NUMBER_OF_CHARACTERS - 1;
+		player2Character = characters.size() - 1;
+		mapNumber = 0;
 
-	}
-
-	private GRect createCharBox(double i, double d, double k, double l,
-			Color color) {
-		GRect charBox = new GRect(i, d, k, l);
-		charBox.setFilled(true);
-		charBox.setFillColor(color);
-		return charBox;
 	}
 
 	@Override
@@ -59,32 +61,72 @@ public class CharSelection extends State {
 
 	}
 
+	/*
+	 * Loades buttons AND images
+	 */
+	@Override
+	public void enterState() {
+		super.enterState();
+		vsImage.scale(0.60);
+		controller.add(vsImage);
+		for (GImage i : characters) {
+			controller.add(i);
+		}
+		controller.add(player1selection);
+		controller.add(player2selection);
+		controller.add(currentMap);
+	}
+
+	/*
+	 * Change the character selected for both players
+	 * Character selection wraps around the edges
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(player1Character + " " + player2Character);
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:
-			player1Character = (player1Character - 1 + NUMBER_OF_CHARACTERS)
-					% NUMBER_OF_CHARACTERS;
-			buttons.get("player1Selection").setFillColor(colors[player1Character]);
+			player1Character = (player1Character - 1 + characters.size())
+					% characters.size();
 			break;
 		case KeyEvent.VK_D:
-			player1Character = (player1Character + 1) % NUMBER_OF_CHARACTERS;
-			buttons.get("player1Selection").setFillColor(colors[player1Character]);
+			player1Character = (player1Character + 1) % characters.size();
 			break;
 		case KeyEvent.VK_LEFT:
-			player2Character = (player2Character - 1 + NUMBER_OF_CHARACTERS)
-					% NUMBER_OF_CHARACTERS;
-			buttons.get("player2Selection").setFillColor(colors[player2Character]);
+			player2Character = (player2Character - 1 + characters.size())
+					% characters.size();
 			break;
 		case KeyEvent.VK_RIGHT:
-			player2Character = (player2Character + 1) % NUMBER_OF_CHARACTERS;
-			buttons.get("player2Selection").setFillColor(colors[player2Character]);
+			player2Character = (player2Character + 1) % characters.size();
 			break;
+		case KeyEvent.VK_M:
+			mapNumber = (mapNumber + 1) % maps.size();
 		default:
 			break;
 		}
-		System.out.println(player1Character + " " + player2Character);
+		// TODO: Border around currently selected characters
+		/*
+		 * Images are rendered with each keyPress. This cleans up the code a
+		 * little and does not take up many computations.
+		 */
+		player1selection.setImage(characters.get(player1Character).getImage());
+		player2selection.setImage(characters.get(player2Character).getImage());
+		currentMap.setImage(maps.get(mapNumber).getImage());
+		
+		
+
+	}
+
+	//This three methods return information needed for the battle.
+	public int getFirstPlayer() {
+		return player1Character;
+	}
+
+	public int getSecondPlayers() {
+		return player2Character;
+	}
+
+	public int getMap() {
+		return mapNumber;
 	}
 
 	@Override
@@ -104,7 +146,7 @@ public class CharSelection extends State {
 					break;
 				case "back":
 					controller.goTo(StateID.MAIN_MENU);
-
+					break;
 				}
 			}
 		}
