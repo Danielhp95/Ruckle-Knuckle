@@ -1,5 +1,7 @@
 package ruckleKnuckle;
 
+import java.awt.RenderingHints.Key;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
@@ -21,11 +23,11 @@ public class StateController extends GraphicsProgram {
 
 	public void run() {
 		resize(WINDOW_WIDTH, WINDOW_LENGTH);
+		createStateHashMap();
 		addMouseListeners();
 		addKeyListeners();
 		addActionListeners();
 
-		createStateHashMap();
 		goTo(currentState);
 	}
 
@@ -36,13 +38,17 @@ public class StateController extends GraphicsProgram {
 		states.put(StateID.BATTLE, new Battle(this));
 		states.put(StateID.CONTROLS, new Controls(this));
 		states.put(StateID.CREDITS, new Credits(this));
-		 /* states.put(StateID.BATTLE, new Battle(this));
+		/*
 		 * states.put(StateID.GAME_OVER, new GameOver(this));
 		 */
 	}
 
 	public void mousePressed(MouseEvent e) {
 		states.get(currentState).mousePressed(e);
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		states.get(currentState).keyPressed(e);
 	}
 
 	public void goTo(StateID newStateID) {

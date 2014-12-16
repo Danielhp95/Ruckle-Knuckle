@@ -1,6 +1,7 @@
 package menus;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import acm.graphics.GObject;
@@ -33,6 +34,12 @@ public class Credits extends State {
 				}
 			}
 		}
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 

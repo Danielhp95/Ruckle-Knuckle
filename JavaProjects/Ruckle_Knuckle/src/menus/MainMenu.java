@@ -1,6 +1,7 @@
 package menus;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import ruckleKnuckle.StateController;
@@ -41,6 +42,12 @@ public class MainMenu extends State{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

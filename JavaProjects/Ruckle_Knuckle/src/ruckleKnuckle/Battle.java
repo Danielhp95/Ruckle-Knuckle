@@ -1,6 +1,7 @@
 package ruckleKnuckle;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import menus.State;
@@ -22,6 +23,12 @@ public class Battle extends State {
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
