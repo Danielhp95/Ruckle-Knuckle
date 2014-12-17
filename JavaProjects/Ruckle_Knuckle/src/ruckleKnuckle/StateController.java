@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
+import menus.Battle;
 import menus.CharSelection;
 import menus.Controls;
 import menus.Credits;
@@ -57,5 +58,21 @@ public class StateController extends GraphicsProgram {
 		states.get(currentState).enterState();
 		;
 	}
+
+	//Information to transfer between character selection and battle
+	public int getPlayer1character() {
+		return  ((CharSelection) states.get(StateID.CHAR_SELECTION)).getPlayer1character();
+	}
+	
+	public int getPlayer2character() {
+		return  ((CharSelection) states.get(StateID.CHAR_SELECTION)).getPlayer2character();
+
+	}
+
+	public int getMap() {
+		return  ((CharSelection) states.get(StateID.CHAR_SELECTION)).getMap();
+	}
+
+
 
 }

@@ -1,4 +1,3 @@
-/bin
  *.aux
  *.dvi
  *.ps
@@ -21,3 +20,4 @@
  *.nav
  *.toc
 
+/bin

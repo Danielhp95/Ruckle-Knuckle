@@ -1,6 +1,5 @@
 package menus;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -14,8 +13,7 @@ import acm.graphics.GRect;
 
 public class CharSelection extends State {
 
-	private int player1Character;
-	private int player2Character;
+	
 	
 	private ArrayList<GImage> characters;
 	private ArrayList<GImage> maps;
@@ -25,6 +23,9 @@ public class CharSelection extends State {
 	GImage player1selection;
 	GImage player2selection;
 	GImage currentMap;
+	
+	private int player1Character;
+	private int player2Character;
 	private int mapNumber;
 
 	public CharSelection(StateController controller) {
@@ -48,12 +49,20 @@ public class CharSelection extends State {
 		buttons.put("battle", new GRect(300, 510, 200, 70));
 		buttons.put("back", new GRect(300, 600, 200, 70));
 
-		// Players start on opposite ends
-		player1Character = 0;
-		player2Character = characters.size() - 1;
-		mapNumber = 0;
-
 	}
+	
+	public int getPlayer1character() {
+		return player1Character;
+	}
+	
+	public int getPlayer2character() {
+		return player2Character;
+	}
+	
+	public int getMap() {
+		return mapNumber;
+	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -67,6 +76,18 @@ public class CharSelection extends State {
 	@Override
 	public void enterState() {
 		super.enterState();
+		
+		//Resets view, no information is stored if menu is exited
+		mapNumber = 0;
+		//players start on opposite ends
+		player1Character = 0;
+		player2Character = characters.size() - 1;
+		
+		player1selection.setImage(characters.get(player1Character).getImage());
+		player2selection.setImage(characters.get(player2Character).getImage());
+		currentMap.setImage(maps.get(mapNumber).getImage());
+		
+		
 		vsImage.scale(0.60);
 		controller.add(vsImage);
 		for (GImage i : characters) {
@@ -114,19 +135,6 @@ public class CharSelection extends State {
 		
 		
 
-	}
-
-	//This three methods return information needed for the battle.
-	public int getFirstPlayer() {
-		return player1Character;
-	}
-
-	public int getSecondPlayers() {
-		return player2Character;
-	}
-
-	public int getMap() {
-		return mapNumber;
 	}
 
 	@Override
