@@ -1,6 +1,5 @@
 package ruckleKnuckle;
 
-import java.awt.RenderingHints.Key;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
@@ -19,9 +18,10 @@ public class StateController extends GraphicsProgram {
 
 	private static final int WINDOW_WIDTH = 1280;
 	private static final int WINDOW_LENGTH = 720;
-	private static StateID currentState = StateID.MAIN_MENU;
-	private HashMap<StateID, State> states;
+	private static StateID currentState = StateID.BATTLE; // Starting state
+	private HashMap<StateID, State> states; //Contains all states
 
+	// Main Loop for the application
 	public void run() {
 		resize(WINDOW_WIDTH, WINDOW_LENGTH);
 		createStateHashMap();
@@ -32,6 +32,7 @@ public class StateController extends GraphicsProgram {
 		goTo(currentState);
 	}
 
+	// Populates hashMap with all the states
 	private void createStateHashMap() {
 		states = new HashMap<>();
 		states.put(StateID.MAIN_MENU, new MainMenu(this));
@@ -44,35 +45,45 @@ public class StateController extends GraphicsProgram {
 		 */
 	}
 
+	/*
+	 * This two functions delegate each action to the current state to handle
+	 */
 	public void mousePressed(MouseEvent e) {
 		states.get(currentState).mousePressed(e);
 	}
-	
+
 	public void keyPressed(KeyEvent e) {
 		states.get(currentState).keyPressed(e);
 	}
 
+	/*
+	 * Called by the different States exits curent state and calls initializer
+	 * for the given following state.
+	 */
 	public void goTo(StateID newStateID) {
 		states.get(currentState).exitState();
 		currentState = newStateID;
 		states.get(currentState).enterState();
-		;
 	}
 
-	//Information to transfer between character selection and battle
+	// Information to transfer between character selection and battle
 	public int getPlayer1character() {
-		return  ((CharSelection) states.get(StateID.CHAR_SELECTION)).getPlayer1character();
+		return ((CharSelection) states.get(StateID.CHAR_SELECTION))
+				.getPlayer1character();
 	}
-	
+
 	public int getPlayer2character() {
-		return  ((CharSelection) states.get(StateID.CHAR_SELECTION)).getPlayer2character();
+		return ((CharSelection) states.get(StateID.CHAR_SELECTION))
+				.getPlayer2character();
 
 	}
 
 	public int getMap() {
-		return  ((CharSelection) states.get(StateID.CHAR_SELECTION)).getMap();
+		return ((CharSelection) states.get(StateID.CHAR_SELECTION)).getMap();
 	}
 
-
+	public double getWindowWidth(){
+		return WINDOW_WIDTH;
+	}
 
 }
