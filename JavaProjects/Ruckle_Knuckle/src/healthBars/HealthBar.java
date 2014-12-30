@@ -45,6 +45,8 @@ public class HealthBar extends GObject {
 
 		//Sets bar either on leftHandSide or RightHandSide
 		handleBarSide(side);
+		controller.add(redBar);
+		controller.add(greenBar);
 	}
 
 	/*Depending on the side given as input, it will place
@@ -92,6 +94,11 @@ public class HealthBar extends GObject {
 	public void paint(Graphics arg0) {
 		controller.add(redBar);
 		controller.add(greenBar);
+	}
+
+	//Used to determine if a character is dead
+	public double getCurrentHealth() {
+		return currentHealth;
 	}
 
 }

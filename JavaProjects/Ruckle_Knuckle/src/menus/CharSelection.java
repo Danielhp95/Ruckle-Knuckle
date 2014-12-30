@@ -19,7 +19,7 @@ public class CharSelection extends State {
 	private ArrayList<GImage> maps;
 
 	// Vs image
-	GImage vsImage = new GImage("images/vs.jpg", 287.5, 70);
+	GImage vsImage = new GImage("../images/vs.jpg", 280.5, 70);
 	GImage player1selection;
 	GImage player2selection;
 	GImage currentMap;
@@ -33,21 +33,24 @@ public class CharSelection extends State {
 		// Characters images
 		characters = new ArrayList<>();
 		maps       = new ArrayList<>();
-		characters.add(new GImage("images/1.jpg", 160, 385));
-		characters.add(new GImage("images/2.jpg", 320, 385));
-		characters.add(new GImage("images/3.jpg", 480, 385));
+		characters.add(new GImage("../images/1.jpg", 160, 385));
+		characters.add(new GImage("../images/2.jpg", 320, 385));
+		characters.add(new GImage("../images/3.jpg", 480, 385));
 		
-		maps.add(new GImage("images/1.jpg"));
-		maps.add(new GImage("images/2.jpg"));
-		maps.add(new GImage("images/3.jpg", 700, 385));
+		maps.add(new GImage("../images/1.jpg"));
+		maps.add(new GImage("../images/2.jpg"));
+		maps.add(new GImage("../images/3.jpg", 700, 385));
 
 		//Same images as 
-		player1selection = new GImage("images/1.jpg", 30, 37.5);
-		player2selection = new GImage("images/3.jpg", 542.5, 37.5);
+		player1selection = new GImage("../images/1.jpg", 30, 37.5);
+		player2selection = new GImage("../images/3.jpg", 542.5, 37.5);
 		currentMap = new GImage(maps.get(0).getImage(), 700, 385);
 
 		buttons.put("battle", new GRect(300, 510, 200, 70));
 		buttons.put("back", new GRect(300, 600, 200, 70));
+		
+		//Scales image to adequate size
+		vsImage.scale(0.60);
 
 	}
 	
@@ -76,7 +79,6 @@ public class CharSelection extends State {
 	@Override
 	public void enterState() {
 		super.enterState();
-		
 		//Resets view, no information is stored if menu is exited
 		mapNumber = 0;
 		//players start on opposite ends
@@ -88,7 +90,7 @@ public class CharSelection extends State {
 		currentMap.setImage(maps.get(mapNumber).getImage());
 		
 		
-		vsImage.scale(0.60);
+		
 		controller.add(vsImage);
 		for (GImage i : characters) {
 			controller.add(i);

@@ -12,26 +12,30 @@ import menus.MainMenu;
 import menus.State;
 import acm.program.GraphicsProgram;
 
-public class StateController extends GraphicsProgram {
+public class StateController extends GraphicsProgram{
 
 	private static final long serialVersionUID = 1L;
+	
 
 	private static final int WINDOW_WIDTH = 1280;
 	private static final int WINDOW_LENGTH = 720;
+
 	private static StateID currentState = StateID.BATTLE; // Starting state
 	private HashMap<StateID, State> states; //Contains all states
 
 	// Main Loop for the application
 	public void run() {
-		resize(WINDOW_WIDTH, WINDOW_LENGTH);
+		
+	    resize(WINDOW_WIDTH, WINDOW_LENGTH);
 		createStateHashMap();
 		addMouseListeners();
 		addKeyListeners();
 		addActionListeners();
-
+		
 		goTo(currentState);
+		
 	}
-
+	
 	// Populates hashMap with all the states
 	private void createStateHashMap() {
 		states = new HashMap<>();
